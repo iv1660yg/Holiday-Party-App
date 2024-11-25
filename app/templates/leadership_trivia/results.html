@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Leadership Trivia Results</title>
+    <style>
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+            text-align: left;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        h1, a {
+            text-align: center;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Over!</h1>
+    <table>
+        <tr>
+            <th>Thank you,</th>
+            <td>{{ user_name }}</td>
+        </tr>
+        <tr>
+            <th>Correct Answers:</th>
+            <td>{{ actual_score }} out of {{ num_questions }}</td>
+        </tr>
+        <tr>
+            <th>Predicted Score:</th>
+            <td>{{ predicted_score }}</td>
+        </tr>
+    </table>
+    <a href="{{ url_for('index') }}"><button>Return to Home</button></a></br>
+    <a href="{{ url_for('leaderboard_leadership_trivia') }}"><button>View the leaderboard</button>
+
+</body>
+</html>

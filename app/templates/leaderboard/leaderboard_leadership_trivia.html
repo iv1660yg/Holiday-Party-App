@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Leadership Trivia Leaderboard</title>
+</head>
+<body>
+    <h1>Leadership Trivia Leaderboard</h1>
+    <table class="vote-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Questions Attempted</th>
+                <th>Predicted Score</th>
+                <th>Actual Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in leaderboard_data %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row['user_name'] }}</td>
+                <td>{{ row['questions_count'] }}</td>
+                <td>{{ row['predicted_score'] }}</td>
+                <td>{{ row['actual_score'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

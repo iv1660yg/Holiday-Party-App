@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Answer Feedback</title>
+</head>
+<body>
+    <h1>{{ question['question'] }}</h1>
+    <p>
+        {% if is_correct %}
+            <strong>Correct!</strong> You selected the right answer: {{ correct_answer }}.
+        {% else %}
+            <strong>Incorrect.</strong> You selected: {{ selected_answer }}. The correct answer is: {{ correct_answer }}.
+        {% endif %}
+    </p>
+    <form method="POST">
+        <button type="submit">Next Question</button>
+    </form>
+</body>
+</html>

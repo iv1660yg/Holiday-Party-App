@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Holiday Trivia Game</title>
+</head>
+<body>
+    <h1>Welcome to the General Holiday Trivia Challenge!</h1>
+    <form action="/general_holiday_trivia/game" method="POST">
+        <label for="name">Enter your name: </label>
+        <input type="text" name="name" id="name" required>
+        <button type="submit">Start Game</button>
+    </form>
+</body>
+</html>

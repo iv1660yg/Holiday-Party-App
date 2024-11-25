@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Holiday Bingo</title>
+    <script>
+        // JavaScript to toggle the required attribute on the name input
+        function toggleNameRequired(isSubmitButton) {
+            const nameInput = document.getElementById('name');
+            if (isSubmitButton) {
+                nameInput.setAttribute('required', 'true');
+            } else {
+                nameInput.removeAttribute('required');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Holiday Bingo</h1>
+    <form method="POST" action="{{ url_for('holiday_bingo') }}">
+        <table class="vote-table">
+            <tbody>
+                {% for row_index in range(bingo_card|length) %}
+                    <tr>
+                        {% for col_index in range(bingo_card[row_index]|length) %}
+                            <td>
+                                <p>{{ bingo_card[row_index][col_index] }}</p>
+                                <input 
+                                    type="text" 
+                                    name="square_{{ row_index }}_{{ col_index }}" 
+                                    placeholder="Enter name">
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            <label for="name">Your Name:</label>
+            <input type="text" name="name" id="name">
+            <button 
+                type="submit" 
+                onclick="toggleNameRequired(true)">Submit</button>
+        </div>
+    </form>
+    <form method="POST" action="{{ url_for('reset_bingo') }}">
+        <button 
+            type="submit" 
+            onclick="toggleNameRequired(false)">Reset Game</button>
+    </form>
+    <br>
+    <a href="{{ url_for('index') }}">
+        <button onclick="toggleNameRequired(false)">Back to Home</button>
+    </a>
+</body>
+</html>

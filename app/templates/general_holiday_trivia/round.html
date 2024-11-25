@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Holiday Trivia - Round {{ round_number }}</title>
+</head>
+<body>
+    <h1>Round {{ round_number }} - Holiday Trivia</h1>
+    <form method="POST">
+        <table class="vote-table">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions %}
+                <tr>
+                    <td>{{ question['question'] }}</td>
+                    <td>
+                        <select name="answer{{ loop.index0 }}" required>
+                            <option value="" disabled selected>Select your answer</option>
+                            {% for option in question['options'] %}
+                            <option value="{{ loop.index0 }}">{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+    </br>
+    <a href="{{ url_for('index') }}"><button>Back to Home</button></a>
+</body>
+</html>

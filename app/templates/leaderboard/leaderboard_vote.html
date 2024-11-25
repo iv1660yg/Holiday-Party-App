@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Voting Leaderboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Voting Leaderboard</h1>
+        
+        <!-- Filter Dropdown for Categories -->
+        <div>
+            <label for="category-filter">Filter by Category:</label>
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="potluck_food">Best Potluck Food</option>
+                <option value="holiday_treats">Best Holiday Treats</option>
+                <option value="board_game">Best Board Game</option>
+                <option value="holiday_attire">Best Holiday Attire</option>
+            </select>
+        </div>
+
+        <br>
+
+        <!-- Leaderboard Table -->
+        <table id="leaderboard" class="vote-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Vote Item</th>
+                    <th>Votes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamically generated rows based on the data passed from Flask -->
+                {% for row in leaderboard_data %}
+                    <tr class="{{ row['category'] }}">
+                        <td>{{ category_map[row['category']] }}</td> <!-- Use friendly name from the category_map -->
+                        <td>{{ row['vote_item'] }}</td>
+                        <td>{{ row['votes'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Filtering Function
+        $('#category-filter').change(function () {
+            var selectedCategory = $(this).val();
+            
+            if (selectedCategory === "all") {
+                // Show all categories if "all" is selected
+                $('#leaderboard tbody tr').show();
+            } else {
+                // Hide rows that do not match the selected category
+                $('#leaderboard tbody tr').each(function () {
+                    if ($(this).hasClass(selectedCategory)) {
+                        $(this).show(); // Show matching category
+                    } else {
+                        $(this).hide(); // Hide non-matching category
+                    }
+                });
+            }
+        });
+    </script>
+     </br>
+        <a href="/"><button>Return Home</button></a>
+</body>
+</html>

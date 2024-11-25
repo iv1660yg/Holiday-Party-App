@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Leadership Trivia Setup</title>
+    <style>
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+        }
+        td input, td select {
+            width: 100%;
+        }
+        button {
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">How Well Do You Know Your Leadership Team?</h1>
+    <form method="POST">
+        <table class="vote-table">
+            <tr>
+                <td><label for="name">Your Name:</label></td>
+                <td><input type="text" id="name" name="name" required></td>
+            </tr>
+            <tr>
+                <td><label for="num_questions">Number of Questions:</label></td>
+                <td>
+                    <select id="num_questions" name="num_questions">
+                        <option value="" selected disabled>Select a number</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="predicted_score">Predicted Score:</label></br>How many questions do think you'll get right?</td>
+                <td><input type="number" id="predicted_score" name="predicted_score" required min="0" size="80%"></td>
+            </tr>
+        </table>
+        <button type="submit">Start Game</button>
+    </form>
+</body>
+</html>

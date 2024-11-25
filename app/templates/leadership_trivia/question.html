@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Question {{ session['current_question_index'] + 1 }}</title>
+</head>
+<body>
+    <h1>{{ question['question'] }}</h1>
+    <form method="POST">
+        <label for="selected_leader">Select the Leader:</label>
+        <select id="selected_leader" name="selected_leader" required>
+            <!-- Placeholder option -->
+            <option value="" selected disabled>Select a leader</option>
+            {% for leader in leaders %}
+                <option value="{{ leader }}">{{ leader }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
