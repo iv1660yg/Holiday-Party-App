@@ -5,10 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Vote</title>
+    <script>
+        function fetchLeadingItems() {
+            const category = document.getElementById('category').value;
+            const displayArea = document.getElementById('leading-items');
+
+            if (category) {
+                fetch(`/get_leading_items?category=${category}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items.length > 0) {
+                            displayArea.innerHTML = `<h3>Leading Items for Selected Category:</h3>
+                                <ul>
+                                    ${data.items.map(item => `<li>${item.name} (${item.votes} votes)</li>`).join('')}
+                                </ul>`;
+                        } else {
+                            displayArea.innerHTML = '<h3>No votes have been submitted for this category yet.</h3>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching leading items:', error);
+                        displayArea.innerHTML = '<h3>Error fetching data. Please try again later.</h3>';
+                    });
+            } else {
+                displayArea.innerHTML = '';
+            }
+        }
+    </script>
 </head>
 <body>
+    
+    <div class="rules-section">
+        <h1>Welcome to vote for the Best Categories</h1>
+        <h2>Rules and Overview</h2>
+        <ul>
+            <li>You can only submit one vote per category.</li>
+            <li>All submissions are final once submitted.</li>
+            <li>Enjoy and have fun!</li>
+        </ul>
+    </div>
+
     <div class="container">
-        <h1>Vote for the Best Holiday Party Categories</h1>
+        
 
         <form action="/submit_vote" method="POST">
             <table class="vote-table">
@@ -21,7 +59,7 @@
                         <label for="category">Select Category:</label>
                     </td>
                     <td>
-                        <select name="category" id="category" required>
+                        <select name="category" id="category" required onchange="fetchLeadingItems()">
                             <option value="" selected disabled>Select an option</option>
                             <option value="potluck_food">Best Potluck Food</option>
                             <option value="potluck_side_dish">Best Potluck Side Dish</option>
@@ -47,7 +85,10 @@
             <button type="submit">Submit Vote</button>
         </form>
     </div>
-</br>
+
+    <div id="leading-items" class="leading-items"></div>
+
+    <br>
     <a href="/"><button>Return Home</button></a>
 </body>
 </html>

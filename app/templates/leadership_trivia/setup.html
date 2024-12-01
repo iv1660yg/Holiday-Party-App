@@ -25,7 +25,27 @@
     </style>
 </head>
 <body>
+    <div class="rules-section">
     <h1 style="text-align: center;">How Well Do You Know Your Leadership Team?</h1>
+
+    <section>
+    <h2>Objective</h2>
+    <p>Test your knowledge of the leadership team! You'll answer a set of multiple-choice questions about the leaders, and your score will be determined by how many correct answers you give.</p>
+    </section>
+    <h2>To get started</h2>
+    <section>
+    <ul>
+        <li>Enter your name to start.</li>
+        <li>Select the number of questions you want to attempt (10, 15, 20, 25, or 30).</li>
+        <li>Predict how many questions you think you'll answer correctly.</li>
+        <li>Answer each question by selecting the correct leader from a list of options.</li>
+        <li>After each question, you'll see whether your answer was correct or incorrect, along with the correct answer.</li>
+        <li>Complete all the questions to see your final score and your rank on the leaderboard.</li>
+    </ul>
+    <p>Checkout the full rules and how to play <a href="{{ url_for('leadership_trivia_rules') }}">here</a>
+    </section>
+
+    </div>
     <form method="POST">
         <table class="vote-table">
             <tr>
@@ -52,5 +72,6 @@
         </table>
         <button type="submit">Start Game</button>
     </form>
+    <a href="{{ url_for('index') }}"><button>Back to Home</button></a>
 </body>
 </html>

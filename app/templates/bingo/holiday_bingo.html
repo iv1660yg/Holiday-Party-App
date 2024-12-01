@@ -18,32 +18,40 @@
     </script>
 </head>
 <body>
-    <h1>Holiday Bingo</h1>
+    <div class="rules-section">
+    <h1><p>Welcome to the fun and festive Holiday Bingo game!</p></h1>
+
+    <section>
+        <h2>Overview</h2>
+        <p>Welcome to <strong>Holiday Bingo</strong>! This interactive game brings the fun of traditional Bingo with a holiday twist. Play with friends, family, or colleagues and see who can complete their Bingo card first! Each card is filled with unique holiday-themed prompts that encourage interaction with others.</p>
+        <p>It’s a great way to mingle, share holiday traditions, and have fun during the holiday season.</p>
+        <p>Checkout the Rules and How to Play <a href="{{ url_for('bingo_rules') }}">Here</a>
+    </section>
+</div>
     <form method="POST" action="{{ url_for('holiday_bingo') }}">
-        <table class="vote-table">
+        <table>
             <tbody>
                 {% for row_index in range(bingo_card|length) %}
+                    {% set row = bingo_card[row_index] %}
                     <tr>
-                        {% for col_index in range(bingo_card[row_index]|length) %}
+                        {% for col_index in range(row|length) %}
                             <td>
-                                <p>{{ bingo_card[row_index][col_index] }}</p>
+                                <p>{{ row[col_index] }}</p>
                                 <input 
                                     type="text" 
                                     name="square_{{ row_index }}_{{ col_index }}" 
-                                    placeholder="Enter name">
+                                    placeholder="Enter name" >
                             </td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <div style="text-align: center;">
+        <div>
             <label for="name">Your Name:</label>
-            <input type="text" name="name" id="name">
-            <button 
-                type="submit" 
-                onclick="toggleNameRequired(true)">Submit</button>
+            <input type="text" id="name" name="name" required>
         </div>
+        <button type="submit">Submit</button>
     </form>
     <form method="POST" action="{{ url_for('reset_bingo') }}">
         <button 

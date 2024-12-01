@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Bingo - Rules & How to Play</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="rules-section">
+    <header>
+        <h1>Holiday Bingo - How to Play</h1>
+        <p>Welcome to the fun and festive Holiday Bingo game!</p>
+    </header>
+
+    <section>
+        <h2>Overview</h2>
+        <p>Welcome to <strong>Holiday Bingo</strong>! This interactive game brings the fun of traditional Bingo with a holiday twist. Play with friends, family, or colleagues and see who can complete their Bingo card first! Each card is filled with unique holiday-themed prompts that encourage interaction with others.</p>
+        <p>It’s a great way to mingle, share holiday traditions, and have fun during the holiday season.</p>
+    </section>
+
+    <section>
+        <h2>How to Play</h2>
+        <ol>
+            <li><strong>Get Your Bingo Card:</strong> Upon starting the game, you’ll receive a randomly generated 5x5 Bingo card filled with holiday-themed prompts (e.g., "Find someone who has baked holiday cookies").</li>
+            <li><strong>Interact with Others:</strong> To fill out the squares, find someone who matches the prompt and have them enter their name in the corresponding square. Each person can only be used once per card.</li>
+            <li><strong>Check for Bingo:</strong> The goal is to complete a full row, column, or diagonal. Each Bingo line (row, column, or diagonal) is worth 1 point. There are a total of <strong>12 possible Bingos</strong> on a 5x5 card.</li>
+            <li><strong>Submit Your Card:</strong> Once your card is complete, submit it for scoring. You can only submit <strong>2 Bingo cards</strong> per player.</li>
+            <li><strong>Leaderboard:</strong> After submitting, your score will be added to the Holiday Bingo Leaderboard!</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Game Rules</h2>
+        <ul>
+            <li><strong>Name Uniqueness:</strong> Each name on your Bingo card must be unique. The same person cannot be listed more than once on your card. If you reuse a name, you will receive an error message and will need to update your card.</li>
+            <li><strong>Case-Insensitive:</strong> Names are case-insensitive. For example, "Sam" and "sam" are treated as the same name.</li>
+            <li><strong>Empty Squares:</strong> You can leave squares empty if you're unable to find someone who matches the prompt. However, rows, columns, or diagonals with empty squares won't count for Bingo.</li>
+            <li><strong>Submission Limit:</strong> Each player is allowed to submit a maximum of <strong>2 Bingo cards</strong>. If you try to submit more, you will be notified that you have reached your limit.</li>
+            <li><strong>Scoring:</strong> A completed row, column, or diagonal is worth 1 point. There are 12 possible Bingos on the card. Your final score will be based on the number of completed lines (rows, columns, and diagonals).</li>
+            <li><strong>Winning:</strong> The player with the most Bingos at the end of the event wins the game!</li>
+            <li><strong>Fair Play:</strong> Be respectful and play fair. Make sure not to reuse names or try to cheat the system. Let's keep it fun for everyone!</li>
+        </ul>
+    </section>
+
+    <section style="text-align: center;">
+        <a href="{{ url_for('index') }}">
+            <button>Back to Home</button>
+        </a>
+        <a href="{{ url_for('holiday_bingo') }}">
+            <button>Back to Bing</button>
+        </a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Holiday Bingo Game.</p>
+    </footer>
+</div>  
+</body>
+</html>

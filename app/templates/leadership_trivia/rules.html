@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Leadership Trivia Rules</title>
+</head>
+<body>
+    <div class="rules-section">
+    <h1>Leadership Trivia Rules</h1>
+
+    <section>
+        <h2>Game Objective</h2>
+        <p>How well do you know your leadership team? Test your knowledge in this fun and interactive trivia game! Predict your score, answer questions, and see if you can beat the leaderboard!</p>
+    </section>
+
+    <section>
+        <h2>How to Play</h2>
+        <ol>
+            <li>Enter your name to start.</li>
+            <li>Select the number of questions you want to attempt (10, 15, 20, 25, or 30).</li>
+            <li>Predict how many questions you think you'll answer correctly.</li>
+            <li>Answer each question by selecting the correct leader from a list of options.</li>
+            <li>After each question, you'll see whether your answer was correct or incorrect, along with the correct answer.</li>
+            <li>Complete all the questions to see your final score and your rank on the leaderboard.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Leaderboard Scoring</h2>
+        <p>Your ranking on the leaderboard is determined by a composite score calculated using the following algorithm:</p>
+        <pre>
+        Composite Score = (Accuracy Score × 0.4) + (Performance Score × 0.6)
+        </pre>
+
+        <ul>
+            <li><strong>Accuracy Score:</strong> Measures how close your predicted score is to your actual score.
+                <br><code>Accuracy Score = 1 - abs(Predicted Score - Actual Score) / Questions Attempted</code>
+            </li>
+            <li><strong>Performance Score:</strong> Evaluates how well you answered the questions.
+                <br><code>Performance Score = (Actual Score / Questions Attempted) × Questions Attempted</code>
+            </li>
+        </ul>
+
+        <P>Weights were chosen based on the idea that while both metrics are important:</P>
+        <ul>
+            <li><strong>Performance (60%)</strong> (actual correct answers) matter more because it demonstrates skill or knowledge.</li>
+            <li><strong>Accuracy (40%)</strong> is rewarded for the predictive value and adds an element of strategy to the game, but it’s less critical than actual performance.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Example Calculation</h2>
+        <p>Let’s say you play a 10-question game with the following stats:</p>
+        <ul>
+            <li><strong>Questions Attempted:</strong> 10</li>
+            <li><strong>Predicted Score:</strong> 7</li>
+            <li><strong>Actual Score:</strong> 8</li>
+        </ul>
+
+        <p>Here’s how your composite score is calculated:</p>
+        <ul>
+            <li><strong>Accuracy Score:</strong>
+                <br><code>Accuracy Score = 1 - abs(7 - 8) / 10 = 0.9</code>
+            </li>
+            <li><strong>Performance Score:</strong>
+                <br><code>Performance Score = (8 / 10) × 10 = 8.0</code>
+            </li>
+            <li><strong>Composite Score:</strong>
+                <br><code>Composite Score = (0.9 × 0.4) + (8.0 × 0.6) = 0.36 + 4.8 = 5.16</code>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Important Rules</h2>
+        <ul>
+            <li>You can only play each question set size (e.g., 10, 15, etc.) once.</li>
+            <li>Choose your predicted score carefully—it affects your leaderboard ranking!</li>
+            <li>Have fun, and don’t forget to get to know your leadership team better!</li>
+        </ul>
+    </section>
+</div>
+<P></P><a href="{{ url_for('leadership_trivia_setup') }}"><button>Start Leadership Trivia</button></a>  <a href="{{ url_for('index') }}"><button>Back to Home</button></a>
+</body>
+</html>

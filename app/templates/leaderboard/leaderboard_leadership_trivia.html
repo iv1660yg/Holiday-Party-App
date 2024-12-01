@@ -5,29 +5,49 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Leadership Trivia Leaderboard</title>
 </head>
-<body>
-    <h1>Leadership Trivia Leaderboard</h1>
-    <table class="vote-table">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Questions Attempted</th>
-                <th>Predicted Score</th>
-                <th>Actual Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in leaderboard_data %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ row['user_name'] }}</td>
-                <td>{{ row['questions_count'] }}</td>
-                <td>{{ row['predicted_score'] }}</td>
-                <td>{{ row['actual_score'] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+    <body>
+        <h1>Leadership Trivia Leaderboard</h1>
+        <table class="vote-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Questions Attempted</th>
+                    <th>Predicted Score</th>
+                    <th>Actual Score</th>
+                    <th>Composite Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in leaderboard_data %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row['user_name'] }}</td>
+                    <td>{{ row['questions_attempted'] }}</td>
+                    <td>{{ row['predicted_score'] }}</td>
+                    <td>{{ row['actual_score'] }}</td>
+                    <td>{{ "%.2f"|format(row['composite_score']) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <P></P>
+
+        <div class="rules-section">
+        <section>
+            <h2>How Scoring Works</h2>
+            <p>
+                Your rank is based on a composite score that considers how close your predicted score was to your actual score 
+                (<strong>Accuracy Score</strong>) and how many questions you answered correctly (<strong>Performance Score</strong>).
+            </p>
+            <p>
+                <strong>Formula:</strong> Composite Score = (Accuracy Score × 0.4) + (Performance Score × 0.6)
+            </p>
+            <a href="{{ url_for('leadership_trivia_rules') }}">Read the full rules here</a>.
+        </section>
+        </div>
+        <P></P>
+        <a href="{{ url_for('index') }}"><button>Back to Home</button></a>
+    </body>
 </html>

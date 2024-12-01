@@ -7,6 +7,7 @@
     <title>Answer Feedback</title>
 </head>
 <body>
+    <div class="feedback-answers">
     <h1>{{ question['question'] }}</h1>
     <p>
         {% if is_correct %}
@@ -15,6 +16,7 @@
             <strong>Incorrect.</strong> You selected: {{ selected_answer }}. The correct answer is: {{ correct_answer }}.
         {% endif %}
     </p>
+    </div>
     <form method="POST">
         <button type="submit">Next Question</button>
     </form>

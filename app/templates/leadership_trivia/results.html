@@ -24,6 +24,7 @@
     </style>
 </head>
 <body>
+    <div class="rules-section">
     <h1>Game Over!</h1>
     <table>
         <tr>
@@ -39,7 +40,8 @@
             <td>{{ predicted_score }}</td>
         </tr>
     </table>
-    <a href="{{ url_for('index') }}"><button>Return to Home</button></a></br>
+</div>
+    <a href="{{ url_for('index') }}"><button>Return to Home</button></a>  
     <a href="{{ url_for('leaderboard_leadership_trivia') }}"><button>View the leaderboard</button>
 
 </body>

@@ -7,9 +7,12 @@
     <title>Game Over</title>
 </head>
 <body>
-    <h1>Game Over!</h1>
-    <p>{{ user_name }}, your final score is: {{ score }} out of 31.</p>
-    <a href="{{ url_for('general_holiday_trivia_game') }}"><button>Play Again</button></a></br>
-    <a href="{{ url_for('leaderboard_trivia') }}"><button>View Leaderboard</button></a>
+    <div class="rules-section">
+        <h1>Game Over!</h1>
+        <p>{{ user_name }}, your final score is: {{ score }} out of 60.</p>
+    </div>
+    <p></p>
+        <a href="{{ url_for('general_holiday_trivia_game') }}"><button>Play Again</button></a>  <a href="{{ url_for('leaderboard_trivia') }}"><button>View Leaderboard</button></a>
+    
 </body>
 </html>

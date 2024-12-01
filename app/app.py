@@ -90,14 +90,15 @@ def vote():
 def submit_vote():
     category = request.form['category']
     voter_name = request.form['voter_name']
-    vote_item = request.form['vote_item']
+    vote_item = request.form['vote_item'].strip().lower()  # Convert to lowercase
     
     # Connect to database
     conn = get_db_connection()
     cursor = conn.cursor()
 
     # Check if the user has already voted in the selected category
-    cursor.execute("SELECT * FROM votes WHERE category = ? AND voter_name = ?", (category, voter_name))
+    cursor.execute("SELECT * FROM votes WHERE category = ? AND LOWER(vote_item) = ? AND LOWER(voter_name) = ?", 
+                   (category, vote_item, voter_name.lower()))
     existing_vote = cursor.fetchone()
 
     if existing_vote:
@@ -148,6 +149,32 @@ def leaderboard_vote():
     # Pass data to the template along with the category map
     return render_template('leaderboard/leaderboard_vote.html', leaderboard_data=leaderboard_data, category_map=category_map)
 
+@app.route('/get_leading_items', methods=['GET'])
+def get_leading_items():
+    category = request.args.get('category', '')
+    if not category:
+        return {"items": []}
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Fetch the top items for the selected category
+    cursor.execute("""
+        SELECT vote_item, COUNT(*) as votes
+        FROM votes
+        WHERE category = ?
+        GROUP BY vote_item
+        ORDER BY votes DESC
+        LIMIT 5
+    """, (category,))
+    results = cursor.fetchall()
+    conn.close()
+
+    # Return the data as JSON
+    items = [{"name": row["vote_item"], "votes": row["votes"]} for row in results]
+    return {"items": items}
+
+
 
 # Holiday Trivia Game Routes
 # General Holiday Trivia Questions and Answers
@@ -164,6 +191,12 @@ questions = {
             {'question': 'What is the traditional flower of Christmas?', 'options': ['Poinsettia', 'Rose', 'Lily', 'Tulip'], 'answer': 0},
             {'question': 'In "A Christmas Carol," what is the first name of Scrooge?', 'options': ['Ebenezer', 'Jacob', 'Bob', 'Fred'], 'answer': 0},
             {'question': 'Which country is the largest exporter of Christmas trees?', 'options': ['Canada', 'United States', 'Denmark', 'Germany'], 'answer': 0},
+            {'question': 'What is the most popular Christmas beverage in the United States?', 'options': ['Eggnog', 'Hot chocolate', 'Cider', 'Mulled wine'], 'answer': 1},
+            {'question': 'Which holiday character is known for saying "Ho Ho Ho"?', 'options': ['Santa Claus', 'Frosty the Snowman', 'Rudolph', 'The Grinch'], 'answer': 0},
+            {'question': 'In the movie "Love Actually," what is the name of the British prime minister played by Hugh Grant?', 'options': ['David Cameron', 'Peter Grant', 'John Major', 'Billy Mack'], 'answer': 1},
+            {'question': 'Which popular holiday song was written by Irving Berlin in 1942?', 'options': ['Jingle Bell Rock', 'White Christmas', 'Silent Night', 'Feliz Navidad'], 'answer': 1},
+            {'question': 'In "Batman Returns," what is the real name of the Penguin?', 'options': ['Oswald Cobblepot', 'Bruce Wayne', 'Edward Nygma', 'Harvey Dent'], 'answer': 0},
+            {'question': 'In *Futurama*, what is the name of the robot who tries to become Santa Claus?', 'options': ['Bender', 'Robot Santa', 'Frybot', 'Zoidberg'], 'answer': 1}, 
         ],
         'round_2': [
             {'question': 'In "Home Alone," where are the McCallisters going on vacation when they leave Kevin behind?', 'options': ['Paris', 'London', 'New York', 'Rome'], 'answer': 0},
@@ -172,10 +205,16 @@ questions = {
             {'question': 'Which actor played six different roles in "The Polar Express"?', 'options': ['Tom Hanks', 'Tim Allen', 'Jim Carrey', 'Will Ferrell'], 'answer': 0},
             {'question': 'In "A Charlie Brown Christmas," who directs the Christmas play?', 'options': ['Charlie Brown', 'Lucy', 'Linus', 'Snoopy'], 'answer': 0},
             {'question': 'What is the name of the town in "The Nightmare Before Christmas"?', 'options': ['Halloween Town', 'Christmas Town', 'Spooky Town', 'Pumpkin Town'], 'answer': 0},
-            {'question': 'In "Rudolph the Red-Nosed Reindeer," what is the name of Rudolph\'s elf friend who wants to be a dentist?', 'options': ['Hermey', 'Sam', 'Yukon', 'Clarice'], 'answer': 0},
             {'question': 'Which holiday movie features a cameo by Donald Trump?', 'options': ['Home Alone 2: Lost in New York', 'The Santa Clause', 'Jingle All the Way', 'Miracle on 34th Street'], 'answer': 0},
             {'question': 'In "The Muppet Christmas Carol," who plays Scrooge?', 'options': ['Michael Caine', 'Kermit the Frog', 'Gonzo', 'Fozzie Bear'], 'answer': 0},
+            {'question': 'In the *Seinfeld* episode "The Pick," what gift does George give to Susan for Christmas?', 'options': ['A velvet painting', 'A clock', 'A framed photo', 'A VHS tape'], 'answer': 0},
             {'question': 'What is the name of the Grinch\'s love interest in "How the Grinch Stole Christmas"?', 'options': ['Martha May Whovier', 'Cindy Lou Who', 'Betty Lou Who', 'Donna Lou Who'], 'answer': 0},
+            {'question': 'What is the name of the fictional reindeer who appeared in the 1999 animated special "Olaf’s Frozen Adventure"?', 'options': ['Stormy', 'Dancer', 'Blitzen', 'Rudy'], 'answer': 3},
+            {'question': 'In what year did the tradition of the White House Christmas tree start?', 'options': ['1920', '1942', '1851', '1967'], 'answer': 2},
+            {'question': 'In *The Simpsons* episode "Miracle on Evergreen Terrace," what causes the Simpson family’s Christmas to go wrong?', 'options': ['Their house burns down', 'Maggie breaks the tree', 'Homer loses his job', 'Bart’s prank'], 'answer': 0},
+            {'question': 'Which song\'s lyrics include "Chestnuts roasting on an open fire"?', 'options': ['The Christmas Song', 'Jingle Bells', 'Last Christmas', 'Silver Bells'], 'answer': 0},
+            {'question': 'Which holiday film is set in the town of Bedford Falls?', 'options': ['It’s a Wonderful Life', 'Home Alone', 'A Christmas Carol', 'Miracle on 34th Street'], 'answer': 0},
+            {'question': 'In "Four Christmases," what holiday tradition does the couple try to avoid?', 'options': ['Spending Christmas with their families', 'Decorating their house', 'Gift exchanges', 'Cooking holiday meals'], 'answer': 0},          
         ],
         'round_3': [
             {'question': 'In which country is it a tradition to eat KFC for Christmas dinner?', 'options': ['Japan', 'South Korea', 'China', 'Thailand'], 'answer': 0},
@@ -184,14 +223,31 @@ questions = {
             {'question': 'What is the traditional Christmas Eve meal in Italy called?', 'options': ['Feast of the Seven Fishes', 'La Noche Buena', 'Réveillon', 'Wigilia'], 'answer': 0},
             {'question': 'Which country celebrates Christmas with a giant lantern festival?', 'options': ['Philippines', 'Indonesia', 'Malaysia', 'Vietnam'], 'answer': 0},
             {'question': 'In which country is it a tradition to hide all brooms on Christmas Eve?', 'options': ['Sweden', 'Finland', 'Norway', 'Denmark'], 'answer': 2},
+            {'question': 'In "Jingle All the Way," who plays the character of Howard Langston?', 'options': ['Arnold Schwarzenegger', 'Chris Pratt', 'Tim Allen', 'Danny DeVito'], 'answer': 0},
             {'question': 'What is the name of the traditional Mexican Christmas celebration that includes a reenactment of Mary and Joseph\'s search for shelter?', 'options': ['Las Posadas', 'La Navidad', 'El Día de los Reyes', 'La Fiesta de Guadalupe'], 'answer': 0},
             {'question': 'In which country is it a tradition to eat 12 grapes at midnight on New Year\'s Eve?', 'options': ['Portugal','Spain', 'Italy', 'Greece'], 'answer': 1},
             {'question': 'What is the name of the traditional German Christmas market?', 'options': ['Christkindlmarkt', 'Weihnachtsmarkt', 'Nikolausmarkt', 'Adventsmarkt'], 'answer': 0},
             {'question': 'In which country is it a tradition to celebrate Christmas with a witch named La Befana?', 'options': ['Italy', 'France', 'Spain', 'Greece'], 'answer': 0},
+            {'question': 'Which holiday is celebrated on the 5th of December in the Netherlands?', 'options': ['Sinterklaas', 'Christmas', 'Hanukkah', 'Diwali'], 'answer': 0},
+            {'question': 'What is the traditional Christmas dessert in the UK?', 'options': ['Christmas Pudding', 'Fruitcake', 'Gingerbread', 'Yule Log'], 'answer': 0},
+            {'question': 'Which country is famous for the "Jólakötturinn" or "Yule Cat" during the Christmas season?', 'options': ['Iceland', 'Norway', 'Sweden', 'Finland'], 'answer': 0},
+            {'question': 'In "The Polar Express," what is the first gift of Christmas?', 'options': ['A bell', 'A toy train', 'A snow globe', 'A teddy bear'], 'answer': 0},
+            {'question': 'In *Futurama*, what holiday is celebrated in the episode "A Pharaoh to Remember"?', 'options': ['Christmas', 'Farnsworth Day', 'Robanukah', 'New Year’s Eve'], 'answer': 0},      
         ],
         'bonus': [
-            {'question': 'What is the name of the reindeer who is Rudolph\'s father?', 'options': [ 'Blitzen', 'Dasher', 'Comet','Donner'], 'answer': 3}
-        ]
+            {'question': 'In "The Muppet Christmas Carol," who plays Bob Cratchit?', 'options': ['Kermit the Frog', 'Fozzie Bear', 'Gonzo', 'Animal'], 'answer': 0},
+            {'question': 'In "National Lampoon’s Christmas Vacation," what does Clark Griswold put on his house?', 'options': ['Christmas lights', 'A giant Santa', 'Inflatable snowman', 'Reindeer statues'], 'answer': 0},
+            {'question': 'In "The Nightmare Before Christmas," who is the "Pumpkin King"?', 'options': ['Jack Skellington', 'Oogie Boogie', 'Sally', 'Zero'], 'answer': 0},
+            {'question': 'In "Bad Santa," what is the name of the character played by Billy Bob Thornton?', 'options': ['Willie T. Soke', 'Santa Joe', 'Nick Claus', 'Big Bill'], 'answer': 0},
+            {'question': 'In "Die Hard," what is the name of the skyscraper where the events take place?', 'options': ['Nakatomi Plaza', 'Regent Tower', 'Empire State Building', 'Willis Tower'], 'answer': 0},
+            {'question': 'In "Batman Returns," who plays the character of Selina Kyle (Catwoman)?', 'options': ['Michelle Pfeiffer', 'Anne Hathaway', 'Halle Berry', 'Julie Newmar'], 'answer': 0},
+            {'question': 'In "Four Christmases," who plays the role of Brad, the main character?', 'options': ['Vince Vaughn', 'Will Ferrell', 'Ben Stiller', 'Paul Rudd'], 'answer': 0},
+            {'question': 'In "Jingle All the Way," what is the name of the toy that Howard Langston tries to buy for his son?', 'options': ['Turbo Man', 'Power Ranger', 'Action Hero', 'Super Soldier'], 'answer': 0},
+            {'question': 'What is the best-selling Christmas song of all time?', 'options': ['White Christmas', 'Last Christmas', 'Jingle Bells', 'Silent Night'], 'answer': 0},
+            {'question': 'In the *Seinfeld* episode "The Strike," what holiday does Kramer invent?', 'options': ['Festivus', 'Christmas in July', 'Winter Solstice', 'Kwanzaa'], 'answer': 0},
+            {'question': 'In "Rudolph the Red-Nosed Reindeer," what is the name of Rudolph\'s elf friend who wants to be a dentist?', 'options': ['Hermey', 'Sam', 'Yukon', 'Clarice'], 'answer': 0},
+            {'question': 'In *The Simpsons* episode "Simpsons Roasting on an Open Fire," what does Homer get for Christmas?', 'options': ['A tattoo', 'A credit card', 'A new car', 'A haircut'], 'answer': 0},
+        ],
     }
 }
 
@@ -219,7 +275,19 @@ def general_holiday_trivia_round_1():
         score = session.get('score', 0)
         questions_in_round = questions['general_holiday_trivia']['round_1']
         
-        # Iterate over questions and retrieve answers dynamically
+        # Shuffle questions
+        random.shuffle(questions_in_round)
+        
+        # Shuffle answer options and update the correct answer index
+        for question in questions_in_round:
+            options = question['options']
+            correct_answer = question['answer']
+            # Shuffle the options
+            random.shuffle(options)
+            # Update the answer index based on shuffled options
+            question['answer'] = options.index(options[correct_answer])
+        
+        # Iterate over shuffled questions and check answers
         for i, question in enumerate(questions_in_round):
             answer = request.form.get(f'answer{i}')
             if answer and int(answer) == question['answer']:
@@ -228,7 +296,11 @@ def general_holiday_trivia_round_1():
         session['score'] = score
         return redirect(url_for('general_holiday_trivia_round_2'))
     
-    return render_template('general_holiday_trivia/round.html', round_number=1, questions=questions['general_holiday_trivia']['round_1'])
+    # Shuffle the questions here before rendering
+    questions_in_round = questions['general_holiday_trivia']['round_1']
+    random.shuffle(questions_in_round)
+    
+    return render_template('general_holiday_trivia/round.html', round_number=1, questions=questions_in_round)
 
 @app.route('/general_holiday_trivia/round_2', methods=['GET', 'POST'])
 def general_holiday_trivia_round_2():
@@ -239,7 +311,19 @@ def general_holiday_trivia_round_2():
         score = session.get('score', 0)
         questions_in_round = questions['general_holiday_trivia']['round_2']
         
-        # Iterate over questions and retrieve answers dynamically
+        # Shuffle questions
+        random.shuffle(questions_in_round)
+        
+        # Shuffle answer options and update the correct answer index
+        for question in questions_in_round:
+            options = question['options']
+            correct_answer = question['answer']
+            # Shuffle the options
+            random.shuffle(options)
+            # Update the answer index based on shuffled options
+            question['answer'] = options.index(options[correct_answer])
+        
+        # Iterate over shuffled questions and check answers
         for i, question in enumerate(questions_in_round):
             answer = request.form.get(f'answer{i}')
             if answer and int(answer) == question['answer']:
@@ -248,7 +332,11 @@ def general_holiday_trivia_round_2():
         session['score'] = score
         return redirect(url_for('general_holiday_trivia_round_3'))
     
-    return render_template('general_holiday_trivia/round.html', round_number=2, questions=questions['general_holiday_trivia']['round_2'])
+    # Shuffle the questions here before rendering
+    questions_in_round = questions['general_holiday_trivia']['round_2']
+    random.shuffle(questions_in_round)
+    
+    return render_template('general_holiday_trivia/round.html', round_number=2, questions=questions_in_round)
 
 
 @app.route('/general_holiday_trivia/round_3', methods=['GET', 'POST'])
@@ -260,7 +348,19 @@ def general_holiday_trivia_round_3():
         score = session.get('score', 0)
         questions_in_round = questions['general_holiday_trivia']['round_3']
         
-        # Iterate over questions and retrieve answers dynamically
+        # Shuffle questions
+        random.shuffle(questions_in_round)
+        
+        # Shuffle answer options and update the correct answer index
+        for question in questions_in_round:
+            options = question['options']
+            correct_answer = question['answer']
+            # Shuffle the options
+            random.shuffle(options)
+            # Update the answer index based on shuffled options
+            question['answer'] = options.index(options[correct_answer])
+        
+        # Iterate over shuffled questions and check answers
         for i, question in enumerate(questions_in_round):
             answer = request.form.get(f'answer{i}')
             if answer and int(answer) == question['answer']:
@@ -269,8 +369,11 @@ def general_holiday_trivia_round_3():
         session['score'] = score
         return redirect(url_for('general_holiday_trivia_bonus'))
     
-    return render_template('general_holiday_trivia/round.html', round_number=3, questions=questions['general_holiday_trivia']['round_3'])
-
+    # Shuffle the questions here before rendering
+    questions_in_round = questions['general_holiday_trivia']['round_3']
+    random.shuffle(questions_in_round)
+    
+    return render_template('general_holiday_trivia/round.html', round_number=3, questions=questions_in_round)
 
 
 
@@ -283,7 +386,19 @@ def general_holiday_trivia_bonus():
         score = session.get('score', 0)
         questions_in_round = questions['general_holiday_trivia']['bonus']
         
-        # Iterate over questions and retrieve answers dynamically
+        # Shuffle questions
+        random.shuffle(questions_in_round)
+        
+        # Shuffle answer options and update the correct answer index
+        for question in questions_in_round:
+            options = question['options']
+            correct_answer = question['answer']
+            # Shuffle the options
+            random.shuffle(options)
+            # Update the answer index based on shuffled options
+            question['answer'] = options.index(options[correct_answer])
+        
+        # Iterate over shuffled questions and check answers
         for i, question in enumerate(questions_in_round):
             answer = request.form.get(f'answer{i}')
             if answer and int(answer) == question['answer']:
@@ -292,7 +407,11 @@ def general_holiday_trivia_bonus():
         session['score'] = score
         return redirect(url_for('general_holiday_trivia_game_over'))
     
-    return render_template('general_holiday_trivia/round.html', round_number='Bonus', questions=questions['general_holiday_trivia']['bonus'])
+    # Shuffle the questions here before rendering
+    questions_in_round = questions['general_holiday_trivia']['bonus']
+    random.shuffle(questions_in_round)
+    
+    return render_template('general_holiday_trivia/round.html', round_number='Bonus', questions=questions_in_round)
 
 
 @app.route('/general_holiday_trivia/game_over', methods=['GET'])
@@ -371,9 +490,10 @@ bingo_leaderboard = defaultdict(int)  # Renamed the leaderboard variable
 @app.route('/bingo/holiday_bingo', methods=['GET', 'POST'])
 def holiday_bingo():
     if request.method == 'GET':
-        # Always generate a new bingo card for each GET request
+        # Generate a new card if one isn't already in session
         bingo_card = generate_bingo_card()
-        session['bingo_card'] = bingo_card  # Save the card in session
+        session['bingo_card'] = bingo_card
+        session['submitted_cards'] = session.get('submitted_cards', 0)  # Track submitted cards
 
         return render_template(
             'bingo/holiday_bingo.html',
@@ -381,26 +501,69 @@ def holiday_bingo():
         )
 
     elif request.method == 'POST':
-        user_name = request.form.get('name', '').strip()
+        user_name = request.form.get('name', '').strip().lower()  # Case-insensitive user names
         if not user_name:
             return "Error: Name is required.", 400
 
+        # Ensure the leaderboard tracks submissions for each user
+        if "bingo_submissions" not in session:
+            session["bingo_submissions"] = {}
+
+        user_submissions = session["bingo_submissions"].get(user_name, 0)
+
+        # Check if the user has already submitted two cards
+        if user_submissions >= 2:
+            return f"Error: You have already submitted the maximum of 2 bingo cards under the name '{user_name}' .", 400
+
         bingo_card = session.get('bingo_card', [])
-        # Process the form input and update the bingo card
+        used_names = set()  # To ensure unique non-empty names per card
+
+        # Validate and process form input
         for i in range(5):
             for j in range(5):
                 square_name = f"square_{i}_{j}"
                 if square_name in request.form:
-                    bingo_card[i][j] = request.form[square_name]  # Update square with user input
+                    name_input = request.form[square_name].strip().lower()
+                    if name_input:  # Only check non-empty names for uniqueness
+                        if name_input in used_names:
+                            return f"Error: The name '{name_input}' has already been used in a square on this card. Names can only be used once per square", 400
+                        used_names.add(name_input)  # Add to the set of used names
+                    bingo_card[i][j] = name_input  # Save name (or empty) to card
 
-        session['bingo_card'] = bingo_card  # Save the updated card in session
+        session['bingo_card'] = bingo_card  # Save the updated card
 
-        # Check for Bingo and update the leaderboard
+        # Check for Bingo and calculate the score
         score = check_for_bingo(bingo_card)
         bingo_leaderboard[user_name] += score  # Increment score in leaderboard
 
-        # Redirect to leaderboard page
+        # Increment the user's submission count
+        session["bingo_submissions"][user_name] = user_submissions + 1
+
         return redirect(url_for('leaderboard_bingo'))
+
+
+def check_for_bingo(bingo_card):
+    """
+    Check the bingo card for valid rows, columns, and diagonals.
+    Each line is worth 1 point, with a maximum of 12 points possible.
+    """
+    score = 0
+
+    # Check rows and columns
+    for i in range(5):
+        if all(bingo_card[i][j] for j in range(5)):  # Row bingo
+            score += 1
+        if all(bingo_card[j][i] for j in range(5)):  # Column bingo
+            score += 1
+
+    # Check diagonals
+    if all(bingo_card[i][i] for i in range(5)):  # Main diagonal
+        score += 1
+    if all(bingo_card[i][4 - i] for i in range(5)):  # Anti-diagonal
+        score += 1
+
+    return score
+
 
 @app.route('/bingo/reset', methods=['POST'])
 def reset_bingo():
@@ -443,8 +606,13 @@ def update_bingo_score(user_name):
     else:
         leaderboard_bingo[user_name] = 1  # Set initial score
 
+
+@app.route('/bingo/rules', methods=['GET'])
+def bingo_rules():
+    return render_template('bingo/bingo_rules.html')
+
 # leadership trivia
-leaders = ["Russ", "Sampson", "Nate", "Matt", "Scott P", "Scott S", "Lynda", "Jess"]
+leaders = ["Russ", "Sampson", "Nate", "Matt", "Scott P", "Scott S", "Lynda", "Todd", "Jess"]
 
 leadership_questions = [
     {"question": "Which leader grew up in a town smaller than the BBY corp campus population (pre-COVID days)?", "answer": "Russ"},
@@ -458,7 +626,15 @@ leadership_questions = [
     {"question": "Which leader has lived in Minnesota for most of their life yet is a Green Bay Packers football fan", "answer": "Nate"},
     {"question": "Which leader was born and grew up in MN, but went to high school in Arizona, college in St. Cloud, and lived in New York", "answer": "Matt"},
     {"question": "Which leader's family has hosted 5 different international students when their kids were in high school", "answer": "Matt"},
-    {"question": "Which leader has kids at two different University of Minnesota colleges currently", "answer": "Matt" }
+    {"question": "Which leader has kids at two different University of Minnesota colleges currently", "answer": "Matt" },
+    {"question": "Which leader was born out side of the United States", "answer": "Sampson"},
+    {"question": "Which leader has Skied down the highest the chairlift in North America, topping out at an elevation of 12,840 feet", "answer": "Sampson"},
+    {"question": "Which leader shares a Decemeber birthday with Actors, Adam Brody and Don Johnson", "answer": "Sampson"},
+    {"question": "Which leader has had multiple traumatic fishing trips as a child, which has turned them off fishing forever", "answer": "Todd"},
+    {"question": "Which leader went to a school that had less than 300 students in both middle and high(7-12) school combined", "answer": "Todd"},
+    {"question": "Which leader's vision has only improved as they've gotten older", "answer": "Todd"},
+    {"question": "Which leader starded working for Best Buy in November 1990", "answer": "Todd"},
+    {"question": "Which leader had their house taken over for a night by a SWAT team", "answer": "Todd"}
 ]
 
 @app.route('/leadership_trivia/setup', methods=['GET', 'POST'])
@@ -581,12 +757,39 @@ def leaderboard_leadership_trivia():
     cursor.execute("""
         SELECT user_name, questions_count, predicted_score, actual_score 
         FROM leadership_scores
-        ORDER BY actual_score DESC, questions_count ASC
     """)
-    leaderboard_data = cursor.fetchall()
+    results = cursor.fetchall()
     conn.close()
 
+    # Calculate composite scores for leaderboard
+    leaderboard_data = []
+    for row in results:
+        questions_attempted = row['questions_count']
+        predicted_score = row['predicted_score']
+        actual_score = row['actual_score']
+
+        # Use scoring algorithm
+        accuracy_score = 1 - abs(predicted_score - actual_score) / questions_attempted
+        accuracy_score = max(0, accuracy_score)  # Ensure non-negative
+        performance_score = (actual_score / questions_attempted) * questions_attempted
+        composite_score = (accuracy_score * 0.4) + (performance_score * 0.6)
+
+        leaderboard_data.append({
+            "user_name": row['user_name'],
+            "questions_attempted": questions_attempted,
+            "predicted_score": predicted_score,
+            "actual_score": actual_score,
+            "composite_score": composite_score
+        })
+
+    # Sort by composite score descending
+    leaderboard_data = sorted(leaderboard_data, key=lambda x: x['composite_score'], reverse=True)
+
     return render_template('leaderboard/leaderboard_leadership_trivia.html', leaderboard_data=leaderboard_data)
+
+@app.route('/leadership_trivia/rules', methods=['GET'])
+def leadership_trivia_rules():
+    return render_template('leadership_trivia/rules.html')
 
 
 if __name__ == '__main__':
