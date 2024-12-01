@@ -6,16 +6,26 @@
     <title>Leaderboard Landing</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <h1>Leaderboards</h1>
-    <div style="text-align: center;">
-        <ul style="list-style-type: none; padding: 0;">
-            <li><a href="{{ url_for('leaderboard_vote') }}"><button>Voting Leaderboard</button></a></li>
-            <li><a href="{{ url_for('leaderboard_bingo') }}"><button>Bingo Leaderboard</button></a></li>
-            <li><a href="{{ url_for('leaderboard_trivia') }}"><button>Holiday Trivia Leaderboard</button></a></li>
-            <li><a href="{{ url_for('leaderboard_leadership_trivia') }}"><button>Leadership Trivia Leaderboard</button></a></li>
+    <body>
+        <div class="rules-section">
+        <h1>Holiday Party Leaderboards</h1>
+        <p>
+            Welcome to the <strong>Holiday Party Leaderboards</strong>! Here, you can explore how participants are performing across different activities. Each leaderboard highlights top scorers, participants, and contributions to making this event a success.
+        </p>
+        <p>
+            Check out the different leaderboards below:
+        </p>
+        <ul>
+            <li><a href="{{ url_for('leaderboard_vote') }}">Voting Leaderboard</a>: Discover the most popular potluck dishes, holiday treats, and other fun categories!</li>
+            <li><a href="{{ url_for('leaderboard_bingo') }}">Holiday Bingo Leaderboard</a>: See who’s been exploring and engaging with their peers to complete Bingo cards.</li>
+            <li><a href="{{ url_for('leaderboard_leadership_trivia') }}">Leadership Trivia Leaderboard</a>: Find out who knows their leadership team the best, balancing trivia skills with strategic predictions.</li>
+            <li><a href="{{ url_for('leaderboard_trivia') }}">Holiday Trivia Leaderboard</a>: Challenge your general holiday knowledge and see who’s the reigning trivia champion!</li>
         </ul>
+        <p>
+            Whether you're here to celebrate your own achievements or cheer on your coworkers, these leaderboards capture the spirit of fun and friendly competition.
+        </p>
+        <P></P>
+        <a href="{{ url_for('index') }}"><button>Back to Home</button></a>
     </div>
-    <a href="{{ url_for('index') }}"><button>Back to Home</button></a>
-</body>
+    </body>
 </html>
