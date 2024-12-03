@@ -4,21 +4,11 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="../static/style.css">
     <title>Bingo Leaderboard</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            margin: 20px auto;
-        }
-        th, td {
-            border: 1px solid #000;
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
+    <div class="rules-section"></div>
     <h1>Bingo Leaderboard</h1>
-    <table class="vote-table">
+    <table class="bingo-table">
         <thead>
             <tr>
                 <th>Rank</th>
@@ -36,6 +26,8 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
+<p></p>
     <div style="text-align: center;">
         <a href="{{ url_for('holiday_bingo') }}"><button>Back to Bingo</button></a>  <a href="{{ url_for('index') }}"><button>Back to Home</button></a>
     </div>

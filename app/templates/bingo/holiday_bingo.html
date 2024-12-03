@@ -26,8 +26,10 @@
         <p>Welcome to <strong>Holiday Bingo</strong>! This interactive game brings the fun of traditional Bingo with a holiday twist. Play with friends, family, or colleagues and see who can complete their Bingo card first! Each card is filled with unique holiday-themed prompts that encourage interaction with others.</p>
         <p>It’s a great way to mingle, share holiday traditions, and have fun during the holiday season.</p>
         <p>Checkout the Rules and How to Play <a href="{{ url_for('bingo_rules') }}">Here</a>
+        <P>For <stronge>mobile screens</stronge>, please rotate your deivce to <stronge>landscape</stronge> for the best viewing layout</P>
     </section>
 </div>
+<div class="bingo-section">
     <form method="POST" action="{{ url_for('holiday_bingo') }}">
         <table>
             <tbody>
@@ -47,17 +49,21 @@
                 {% endfor %}
             </tbody>
         </table>
+        <p></p>
         <div>
             <label for="name">Your Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" class="name-input" name="name" required>
         </div>
         <button type="submit">Submit</button>
     </form>
+
+</div>
     <form method="POST" action="{{ url_for('reset_bingo') }}">
         <button 
             type="submit" 
             onclick="toggleNameRequired(false)">Reset Game</button>
     </form>
+    <P></P><P></P>
     <br>
     <a href="{{ url_for('index') }}">
         <button onclick="toggleNameRequired(false)">Back to Home</button>

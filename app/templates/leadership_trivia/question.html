@@ -7,6 +7,7 @@
     <title>Question {{ session['current_question_index'] + 1 }}</title>
 </head>
 <body>
+    <div class="rules-section">
     <h1>{{ question['question'] }}</h1>
     <form method="POST">
         <label for="selected_leader">Select the Leader:</label>
@@ -17,6 +18,7 @@
                 <option value="{{ leader }}">{{ leader }}</option>
             {% endfor %}
         </select>
+    </div>
         <button type="submit">Submit</button>
     </form>
 </body>

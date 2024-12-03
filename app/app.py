@@ -634,7 +634,22 @@ leadership_questions = [
     {"question": "Which leader went to a school that had less than 300 students in both middle and high(7-12) school combined", "answer": "Todd"},
     {"question": "Which leader's vision has only improved as they've gotten older", "answer": "Todd"},
     {"question": "Which leader starded working for Best Buy in November 1990", "answer": "Todd"},
+    {"question": "Which leader's first job was at Dundee Nursery, has a passion for gardening, and would choose to work at a garden center and nursery if they could switch careers?", "answer": "Lynda"},
+    {"question": "Which leader has lived in 10 newly built homes throughout their life, including 4 new homes with their parents and 6 new homes they built with their significant other?", "answer": "Lynda"},
+    {"question": "Which leader's favorite breakfast is a bacon, egg, cheddar cheese croissant sandwich from Sandy's Place?", "answer": "Lynda"},
+    {"question": "Which leader loves cooking so much that they've kept 3 years' worth of Cooking Light magazines, still use them today, and cut out the recipes they like before discarding the magazine?", "answer": "Lynda"},
+    {"question": "Which leader holds a second degree black belt in Tae Kwon Do and was once a certified instructor?", "answer": "Lynda"},
+    {"question": "Which leader met and spoke with Capt. Jim Lovell from Apollo 13?", "answer": "Scott S"},
+    {"question": "Which leader has 42 cousins?", "answer": "Scott S"},
+    {"question": "Which leader has been skydiving?", "asnwer": "Scott S"},
+    {"question": "Which leader went scuba diving on the Great Barrier Reef?", "asnwer": "Scott S"},
+    {"question": "Which leader built a movie-accurate, wearable set of Stormtrooper armor?", "answer": "Scott S"},
+    {"question": "Which leader has owned 6 classic Ford Mustangs?", "answer": "Scott S"},
+    {"question": "Which leader introduced a video on Total Request Live on MTV in 2000 (Limp Bizkit's Rollin')?", "answer": "Scott S"},
+    {"question": "Which leader has two patents?", "answer": "Scott S"},
+    {"question": "Which leader was a competitive slalom skier until a crash took a quarter-sized chunk of bone from their hip during an exhibition race?", "answer": "Scott S"},
     {"question": "Which leader had their house taken over for a night by a SWAT team", "answer": "Todd"}
+    
 ]
 
 @app.route('/leadership_trivia/setup', methods=['GET', 'POST'])
