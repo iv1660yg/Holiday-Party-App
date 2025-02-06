@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Trivia Leaderboard</title>
+    <title>Holiday Trivia Leaderboard</title>
 </head>
 <body>
-    <h1>Trivia Leaderboard</h1>
+    <div class="rules-section">
+    <h1>Holiday Trivia Leaderboard</h1>
+    <hr>
     <table class="vote-table">
         <thead>
             <tr>
@@ -26,6 +28,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
     <p></p>
     <a href="{{ url_for('index') }}"><button>Back to Home</button></a>
 </body>

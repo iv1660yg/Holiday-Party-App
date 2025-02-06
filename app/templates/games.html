@@ -11,30 +11,40 @@
     <header>
         <h1>Welcome to the Holiday Fun Games!</h1>
     </header>
-    
+    <hr>
     <section id="games-overview">
         <h2>Choose Your Holiday Adventure</h2>
         <p>
             It's time to join the fun! We've curated a selection of games and activities to help you bond with your coworkers, show off your skills, and make this holiday season unforgettable. Whether you're in the mood for trivia, interactive challenges, or some friendly competition, there's something for everyone!
         </p>
+        <hr>
+        <div class="game-option">
+            <h3>Minute to Win It</h3>
+            <p>Join fast-paced team-building games like Penny Stack, Cup Stack, and Pretty Windy. Collaborate with coworkers for some thrilling fun!</p>
+            <a href="{{ url_for('minute_to_win_it') }}"><button>Explore Games</button></a>
+        </div>
+        <hr>
 
         <div class="game-option">
             <h3>Bingo Game</h3>
             <p>Think you know your peers? The <strong>Bingo Game</strong> challenges you to interact with coworkers to fill out your bingo card. Each square asks you to find someone who matches the criteria. It's a great way to connect and learn fun facts about your team!</p>
             <a href="{{ url_for('holiday_bingo') }}"><button>Play Bingo</button></a>
         </div>
+        <hr>
 
         <div class="game-option">
             <h3>Leadership Trivia</h3>
             <p>How well do you know your leadership team? Test your knowledge with the <strong>Leadership Trivia</strong> game. Answer questions about your leaders and learn some surprising facts along the way. Each round offers a unique challenge!</p>
             <a href="{{ url_for('leadership_trivia_setup') }}"><button>Start Leadership Trivia</button></a>
         </div>
+        <hr>
 
         <div class="game-option">
             <h3>Holiday Trivia</h3>
             <p>Show off your holiday knowledge with our <strong>Holiday Trivia</strong> game. From Christmas traditions to festive facts, see how many questions you can get right. Compete for the top score!</p>
             <a href="{{ url_for('general_holiday_trivia_game') }}"><button>Play Holiday Trivia</button></a>
         </div>
+        <hr>
 
         <div class="game-option">
             <h3>Vote for Your Favorites</h3>
@@ -42,6 +52,7 @@
             <a href="{{ url_for('vote') }}"><button>Vote Now</button></a>
         </div>
     </section>
+    <hr>
     <p></p>
 
     <footer>

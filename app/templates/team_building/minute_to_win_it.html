@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Minute to Win It</title>
+</head>
+<body>
+    <div class="rules-section">
+    <header>
+        <h1>Minute to Win It Team-Building Games</h1>
+    </header>
+    <section>
+        <h2>Overview</h2>
+        <p>
+            Engage in exciting "Minute to Win It" games designed to promote teamwork and collaboration! These fast-paced activities require you to partner with coworkers you don’t often interact with. Challenge yourself and have fun while building stronger connections.
+        </p>
+        <hr>
+
+        <h2>Games</h2>
+        <div class="game-list">
+            <div class="game-min">
+                <h3>Pretty Windy 2v2</h3>
+                <p><strong>Objective:</strong> Each player knocks over five plastic cups using only the air from an inflated balloon.</p>
+                <p><strong>Setup:</strong> Line up 10 plastic cups on each side of a table (5 per player). Each player gets one balloon.</p>
+                <p><strong>Gameplay:</strong> 
+                    <ul>
+                        <li>Each team has one minute to blow up their balloons and use the air to knock down the cups.</li>
+                        <li>Each player must knock over five cups.</li>
+                        <li>Players can blow up the balloon as many times as needed.</li>
+                    </ul>
+                </p>
+                <p><strong>Winning:</strong> The team that knocks down all their cups first wins!</p>
+            </div>
+            <hr>
+            <div class="game-min">
+                <h3>Cup Stack </h3>
+                <p><strong>Objective:</strong> Build a tower of 36 plastic cups within one minute.</p>
+                <p><strong>Setup:</strong> Provide each team with 36 sturdy plastic cups.</p>
+                <p><strong>Gameplay:</strong> 
+                    <ul>
+                        <li>Each team has one minute to stack their cups into a stable tower.</li>
+                        <li>Team members can collaborate to build the tower.</li>
+                        <li>The tower must stand on its own without falling.</li>
+                    </ul>
+                </p>
+                <p><strong>Winning:</strong> The team that completes their tower in the least time wins!</p>
+            </div>
+            <hr>
+            <div class="game-min">
+            <h3>Moving On Up</h3>
+            <p><strong>Objective:</strong> Each team must move a designated cup from the bottom of the stack to the top within one minute.</p>
+            <p><strong>Setup:</strong>Provide each team with 20 cups of the same color and one cup of a different color. The different-colored cup starts at the bottom of the stack.</p>
+            <p><strong>Gameplay:</strong> 
+                <ul>
+                    <li>Each team has one minute to move the different-colored cup from the bottom to the top of the stack.</li>
+                    <li>Team members must alternate turns, using one hand at a time to move the cups.</li>
+                    <li>The cups must be moved one at a time.</li>
+                </ul>
+            </p>
+            <p><strong>Winning:</strong> The team that successfully moves the different-colored cup to the top of the stack first wins.</p>
+            </div>
+            <hr>
+            <div class="game-min">
+                <h3>Penny Stack</h3>
+                <p><strong>Objective:</strong> Stack as many pennies as possible using only one hand.</p>
+                <p><strong>Setup:</strong> Provide each team with a bowl of pennies and an open desk.</p>
+                <p><strong>Gameplay:</strong> 
+                    <ul>
+                        <li>Each team has one minute to stack as many pennies as possible.</li>
+                        <li>Players can only use one hand to stack the pennies.</li>
+                    </ul>
+                </p>
+                <p><strong>Winning:</strong> The team with the most pennies stacked within the time limit wins!</p>
+            </div>
+            
+
+            <div class="game-min">
+                <h3>Fork It Over</h3>
+                <p><strong>Objective:</strong> Trap as many quarters as possible in the tines of a fork within one minute.</p>
+                <p><strong>Setup:</strong> Provide each team with a fork and a stack of quarters.</p>
+                <p><strong>Gameplay:</strong> 
+                    <ul>
+                        <li>Each team has one minute to roll quarters and trap them in the fork tines.</li>
+                        <li>Players must use their non-dominant hand to roll the quarters.</li>
+                    </ul>
+                </p>
+                <p><strong>Winning:</strong> The team that traps the most quarters in the fork wins!</p>
+            </div>
+        </div>
+        <hr>
+
+        <h2>Rules</h2>
+        <ul>
+            <li>Each game lasts one minute.</li>
+            <li>Teams must consist of at least 2 players, and members should come from different departments or roles.</li>
+            <li>Points are awarded for task completion and creativity.</li>
+            <li>The team with the most points across all games wins!</li>
+        </ul>
+
+        <p>Let’s have some fun and build stronger connections!</p>
+    </section>
+    </div>
+    <footer>
+        <a href="{{ url_for('games') }}"><button>Back to Games</button></a>
+    </footer>
+</body>
+</html>

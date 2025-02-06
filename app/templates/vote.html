@@ -15,7 +15,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.items.length > 0) {
-                            displayArea.innerHTML = `<h3>Leading Items for Selected Category:</h3>
+                            displayArea.innerHTML = `<h3>Leading Items for Selected Category:</h3><hr>
                                 <ul>
                                     ${data.items.map(item => `<li>${item.name} (${item.votes} votes)</li>`).join('')}
                                 </ul>`;
@@ -37,6 +37,7 @@
     
     <div class="rules-section">
         <h1>Welcome to vote for the Best Categories</h1>
+        <hr>
         <h2>Rules and Overview</h2>
         <ul>
             <li>You can only submit one vote per category.</li>
@@ -45,7 +46,7 @@
         </ul>
     </div>
 
-    <div class="container">
+    <div class="rules-section">
         
 
         <form action="/submit_vote" method="POST">

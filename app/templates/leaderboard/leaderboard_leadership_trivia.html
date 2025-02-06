@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Leadership Trivia Leaderboard</title>
 </head>
     <body>
+        <div class="rules-section">
         <h1>Leadership Trivia Leaderboard</h1>
+        <hr>
         <table class="vote-table">
             <thead>
                 <tr>
@@ -31,7 +34,7 @@
                 {% endfor %}
             </tbody>
         </table>
-
+        </div>
         <P></P>
 
         <div class="rules-section">

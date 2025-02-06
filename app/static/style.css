@@ -1,16 +1,17 @@
 /* General Styling */
 body {
-    font-family: 'Arial', sans-serif;
-    color: #333333;
-    text-align: center;
-    padding: 20px;
-    margin: 0;
-    overflow-x: hidden;
-    position: relative; /* Ensure proper layering for the pseudo-element */
+    font-family: 'Arial', sans-serif; /* Sets the default font for the body */
+    color: #333333; /* Sets the default text color */
+    text-align: center; /* Centers text horizontally */
+    padding: 20px; /* Adds space around the content */
+    margin: 0; /* Removes any default margin */
+    overflow-x: hidden; /* Hides horizontal scrollbars */
+    position: relative; /* Ensures proper layering for the pseudo-element */
 }
 
 body::before {
     content: '';
+    content: ''; /* Creates an empty pseudo-element */
     position: fixed; /* Ensures it covers the whole screen */
     top: 0;
     left: 0;
@@ -20,14 +21,27 @@ body::before {
     z-index: -1; /* Place behind all content */
     filter: blur(5px); /* Apply blur to the background image */
     pointer-events: none; /* Ensure interactions work on the content above */
+    background: url('bg.png') center center/cover no-repeat; /* Sets the background image */
+    z-index: -1; /* Places behind all content */
+    filter: blur(5px); /* Applies a blur effect to the background image */
+    pointer-events: none; /* Ensures interactions work on the content above */
 }
 
+.game-min {
+    padding: 12px;
+    text-align: left;
+    padding: 12px; /* Adds padding around game-related elements */
+    text-align: left; /* Aligns text to the left */
+}
 
 /* Styling the Table */
 .vote-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    width: 100%; /* Makes the table take up full width */
+    border-collapse: collapse; /* Collapses borders for cleaner appearance */
+    margin-top: 20px; /* Adds space above the table */
 }
 
 .vote-table th, .vote-table td {
@@ -35,19 +49,27 @@ body::before {
     text-align: left;
     border: 1px solid #638F85;
     font-size: 1.2em;
+    padding: 12px; /* Adds padding around table cells */
+    text-align: left; /* Aligns text to the left */
+    border: 1px solid #638F85; /* Sets cell borders */
+    font-size: 1.2em; /* Increases font size for better readability */
 }
 
 .vote-table th {
     background-color: #638F85;
     color: white;
+    background-color: #638F85; /* Darker color for table headers */
+    color: white; /* White text for contrast */
 }
 
 .vote-table tr:nth-child(even) {
     background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Light gray background for even rows */
 }
 
 .vote-table tr:hover {
     background-color: #ffe0b2;
+    background-color: #d0d0d0; /* Lighter shade on hover for better user experience */
 }
 
 /* Styling the Vote Form Input Fields */
@@ -66,9 +88,9 @@ input[type="text"], select {
 
 /* Button Styling */
 button {
-    background-color: #9BC1C8;  
+    background-color: #9BC1C8;
     color: #333;
-    border: 2px solid #638F85;  
+    border: 2px solid #638F85;
     padding: 10px 20px;
     font-size: 18px;
     font-weight: bold;
@@ -155,6 +177,7 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
+/* Styling for Feedback Answers Section */
 .feedback-answers {
     background-color: rgba(255, 255, 255, 0.8); /* Light background with slight transparency */
     border: 1px solid #ccc; /* Subtle border */
@@ -163,6 +186,13 @@ button:hover {
     border-radius: 8px; /* Round the corners */
     max-width: 800px; /* Limit width for readability */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 20px; /* Padding for spacing */
+    margin: 20px auto; /* Centering the section */
+    border-radius: 8px; /* Rounded corners */
+    max-width: 800px; /* Maximum width for layout control */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .bingo-table {
@@ -173,6 +203,15 @@ button:hover {
     border: 1px solid #638F85;;
     padding: 10px;
     text-align: center;
+/* Styling for Leading Items Section */
+.leading-items {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .bingo-section {
@@ -183,4 +222,37 @@ button:hover {
     border-radius: 4px; /* Round the corners */
     max-width: 800px; /* Limit width for readability */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+/* Styling for Bingo Table */
+.bingo-table {
+    border-collapse: collapse;
+    margin: 10px auto;
+}
+
+.bingo-table th, td {
+    border: 1px solid #638F85;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Styling for Bingo Section */
+.bingo-section {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 4px;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for Feedback Answers Section */
+.feedback-answers {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

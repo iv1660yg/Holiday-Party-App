@@ -641,13 +641,13 @@ leadership_questions = [
     {"question": "Which leader holds a second degree black belt in Tae Kwon Do and was once a certified instructor?", "answer": "Lynda"},
     {"question": "Which leader met and spoke with Capt. Jim Lovell from Apollo 13?", "answer": "Scott S"},
     {"question": "Which leader has 42 cousins?", "answer": "Scott S"},
-    {"question": "Which leader has been skydiving?", "asnwer": "Scott S"},
-    {"question": "Which leader went scuba diving on the Great Barrier Reef?", "asnwer": "Scott S"},
-    {"question": "Which leader built a movie-accurate, wearable set of Stormtrooper armor?", "answer": "Scott S"},
-    {"question": "Which leader has owned 6 classic Ford Mustangs?", "answer": "Scott S"},
-    {"question": "Which leader introduced a video on Total Request Live on MTV in 2000 (Limp Bizkit's Rollin')?", "answer": "Scott S"},
-    {"question": "Which leader has two patents?", "answer": "Scott S"},
-    {"question": "Which leader was a competitive slalom skier until a crash took a quarter-sized chunk of bone from their hip during an exhibition race?", "answer": "Scott S"},
+    {"question": "Which leader has been skydiving?", "answer": "Scott S"},
+    {"question": "Which leader went scuba diving on the Great Barrier Reef?", "answer": "Scott S"},
+    {"question": "Which leader built a movie-accurate, wearable set of Stormtrooper armor?", "answer": "Scott P"},
+    {"question": "Which leader has owned 6 classic Ford Mustangs?", "answer": "Scott P"},
+    {"question": "Which leader introduced a video on Total Request Live on MTV in 2000 (Limp Bizkit's Rollin')?", "answer": "Scott P"},
+    {"question": "Which leader has two patents?", "answer": "Scott P"},
+    {"question": "Which leader was a competitive slalom skier until a crash took a quarter-sized chunk of bone from their hip during an exhibition race?", "answer": "Scott P"},
     {"question": "Which leader had their house taken over for a night by a SWAT team", "answer": "Todd"}
     
 ]
@@ -691,9 +691,15 @@ def leadership_trivia_question():
     if 'questions' not in session or session['current_question_index'] >= session['num_questions']:
         return redirect(url_for('leadership_trivia_results'))
 
+    # Retrieve the current question
+    current_question = session['questions'][session['current_question_index']]
+
+    # Ensure the current question has an 'answer'
+    if 'answer' not in current_question:
+        return "Error: Missing 'answer' key in the question. Please check the setup.", 500
+
     if request.method == 'POST':
         selected_answer = request.form.get('selected_leader', '')
-        current_question = session['questions'][session['current_question_index']]
         correct_answer = current_question['answer']
 
         # Check correctness and update score
@@ -712,8 +718,7 @@ def leadership_trivia_question():
         # Show feedback before proceeding
         return redirect(url_for('leadership_trivia_feedback'))
 
-    # Display the current question
-    current_question = session['questions'][session['current_question_index']]
+    # Prepare options for the dropdown
     randomized_leaders = random.sample(leaders, k=4)
     if current_question['answer'] not in randomized_leaders:
         randomized_leaders[0] = current_question['answer']
@@ -805,6 +810,11 @@ def leaderboard_leadership_trivia():
 @app.route('/leadership_trivia/rules', methods=['GET'])
 def leadership_trivia_rules():
     return render_template('leadership_trivia/rules.html')
+
+@app.route('/team_building/minute_to_win_it', methods=['GET'])
+def minute_to_win_it():
+    return render_template('team_building/minute_to_win_it.html')
+
 
 
 if __name__ == '__main__':

@@ -8,10 +8,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <div class="rules-section">
     <div class="container">
         <h1>Voting Leaderboard</h1>
+        <hr>
         
-        <!-- Filter Dropdown for Categories -->
         <div>
             <label for="category-filter">Filter by Category:</label>
             <select id="category-filter">
@@ -25,7 +26,7 @@
 
         <br>
 
-        <!-- Leaderboard Table -->
+        
         <table id="leaderboard" class="vote-table">
             <thead>
                 <tr>
@@ -35,10 +36,10 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Dynamically generated rows based on the data passed from Flask -->
+                
                 {% for row in leaderboard_data %}
                     <tr class="{{ row['category'] }}">
-                        <td>{{ category_map[row['category']] }}</td> <!-- Use friendly name from the category_map -->
+                        <td>{{ category_map[row['category']] }}</td> 
                         <td>{{ row['vote_item'] }}</td>
                         <td>{{ row['votes'] }}</td>
                     </tr>
@@ -46,7 +47,7 @@
             </tbody>
         </table>
     </div>
-
+</div>
     <script>
         // Filtering Function
         $('#category-filter').change(function () {

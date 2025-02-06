@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Set the title of the web page -->
     <title>Holiday Bingo - Rules & How to Play</title>
+    <!-- Link to an external CSS file for styling -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="rules-section">
     <header>
+        <!-- Main header with the game title and welcome message -->
+        <header>
         <h1>Holiday Bingo - How to Play</h1>
         <p>Welcome to the fun and festive Holiday Bingo game!</p>
     </header>
 
+        <!-- Overview section of the game -->
     <section>
         <h2>Overview</h2>
         <p>Welcome to <strong>Holiday Bingo</strong>! This interactive game brings the fun of traditional Bingo with a holiday twist. Play with friends, family, or colleagues and see who can complete their Bingo card first! Each card is filled with unique holiday-themed prompts that encourage interaction with others.</p>
@@ -22,6 +27,10 @@
     <section>
         <h2>How to Play</h2>
         <ol>
+        <!-- How to Play section -->
+        <section>
+            <h2>How to Play</h2>
+            <ol>
             <li><strong>Get Your Bingo Card:</strong> Upon starting the game, you’ll receive a randomly generated 5x5 Bingo card filled with holiday-themed prompts (e.g., "Find someone who has baked holiday cookies").</li>
             <li><strong>Interact with Others:</strong> To fill out the squares, find someone who matches the prompt and have them enter their name in the corresponding square. Each person can only be used once per card.</li>
             <li><strong>Check for Bingo:</strong> The goal is to complete a full row, column, or diagonal. Each Bingo line (row, column, or diagonal) is worth 1 point. There are a total of <strong>12 possible Bingos</strong> on a 5x5 card.</li>
@@ -30,6 +39,7 @@
         </ol>
     </section>
 
+        <!-- Game Rules section -->
     <section>
         <h2>Game Rules</h2>
         <ul>
@@ -43,18 +53,22 @@
         </ul>
     </section>
 
+        <!-- Navigation buttons -->
     <section style="text-align: center;">
         <a href="{{ url_for('index') }}">
             <button>Back to Home</button>
         </a>
         <a href="{{ url_for('holiday_bingo') }}">
             <button>Back to Bing</button>
+                <button>Back to Bingo</button>
         </a>
     </section>
 
+        <!-- Footer with copyright information -->
     <footer>
         <p>&copy; 2024 Holiday Bingo Game.</p>
     </footer>
-</div>  
+</div>
+    </div>  
 </body>
 </html>
